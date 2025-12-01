@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumanth- Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+
+        nav button:hover, nav button.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .skill-category h3 {
+            margin-top: 0;
+        }
+
+        .skill-bar {
+            margin: 15px 0;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0;
+            transition: width 1s ease;
+            border-radius: 5px;
+        }
+
+        .project-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #764ba2;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .project-date {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .bio-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .bio-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bio-table td:first-child {
+            font-weight: 600;
+            color: #667eea;
+            width: 200px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+		.circle-crop {
+  width: 150px;          /* size of the circle */
+  height: 150px;
+  border-radius: 50%;    /* makes it circular */
+  overflow: hidden;      /* hides the overflowing parts */
+  display: inline-block; 
+  border: 3px solid #fff; /* optional border */
+  box-shadow: 0 0 8px rgba(0,0,0,0.3); /* optional shadow */
+}
+
+.circle-crop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* ensures the image fills the circle nicely */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <button class="nav-btn active" data-section="home">Home</button>
+            <button class="nav-btn" data-section="resume">Resume</button>
+            <button class="nav-btn" data-section="biodata">Bio Data</button>
+            <button class="nav-btn" data-section="projects">Projects</button>
+            <button class="nav-btn" data-section="contact">Contact</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="hero">
+                <div class="circle-crop">
+  <img src="https://raw.githubusercontent.com/sumanthr27/Sumanth-Website/refs/heads/main/WhatsApp%20Image%202024-07-03%20at%2022.44.23_17daf3e9.jpg" alt="Profile Picture">
+</div>
+                <h1>Sumanth R</h1>
+                <p class="subtitle">Computer Science Engineering Student | Developer</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>rsumanth734@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <span>+91 9535115910</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Bangalore, India</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>About Me</h2>
+            <p style="font-size: 1.1em; line-height: 1.8; color: #555;">
+                Computer Science Engineering student based in Bangalore, with a strong foundation in programming 
+                and logical problem-solving. Proficient in C and Python, with a keen interest in software 
+                development. I am also passionate about art, particularly sketching, which enhances my creative 
+                thinking and attention to detail.
+            </p>
+
+            <div class="skills-grid">
+                
+                <div class="skill-category">
+                    <h3>💡 Soft Skills</h3>
+                    <span class="tag">Creativity</span>
+                    <span class="tag">Critical Thinking</span>
+                    <span class="tag">Problem Solving</span>
+                    <span class="tag">Leadership</span>
+                    <span class="tag">Negotiation</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="content-section">
+            <h1>Resume</h1>
+            
+            <h2>🎓 Education</h2>
+            <div class="project-card">
+                <h3>Bachelor of Engineering in Computer Science</h3>
+                <p class="project-date">Bangalore Institute of Technology | 2023 - 2027</p>
+                <p>Currently in 5th Semester</p>
+            </div>
+
+            <h2>💻 Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <p>C, Python, Java</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Web Technologies</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Software</h3>
+                    <p>Visual Studio Code, PyCharm, Git</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Other Skills</h3>
+                    <p>Data Structures, Algorithms, Operating Systems</p>
+                </div>
+            </div>
+
+            <h2>🌐 Languages</h2>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+                <span class="tag">English</span>
+                <span class="tag">Kannada</span>
+                <span class="tag">Hindi</span>
+                <span class="tag">Tamil (Basic)</span>
+            </div>
+
+            <button class="download-btn" onclick="downloadResume()">📥 Download Resume</button>
+        </section>
+
+        <!-- Bio Data Section -->
+        <section id="biodata" class="content-section">
+            <h1>Bio Data</h1>
+            
+            <h2>Personal Details</h2>
+            <table class="bio-table">
+                <tr>
+                    <td>Name</td>
+                    <td>Sumanth R</td>
+                </tr>
+                <tr>
+                    <td>Date of Birth</td>
+                    <td>27/05/2005</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>Male</td>
+                </tr>
+                <tr>
+                    <td>Nationality</td>
+                    <td>Indian</td>
+                </tr>
+                <tr>
+                    <td>Blood Group</td>
+                    <td>AB+ Positive</td>
+                </tr>
+                <tr>
+                    <td>Mother Tongue</td>
+                    <td>Kannada</td>
+                </tr>
+                <tr>
+                    <td>Languages Known</td>
+                    <td>Tamil, Kannada, Hindi, English</td>
+                </tr>
+            </table>
+
+            <h2>Contact Information</h2>
+            <table class="bio-table">
+                <tr>
+                    <td>Permanent Address</td>
+                    <td>#128, 2th Cross, Simhadri Layout, Vidyaranyapura, Bangalore - 97</td>
+                </tr>
+                <tr>
+                    <td>Current Address</td>
+                    <td>Bangalore</td>
+                </tr>
+                <tr>
+                    <td>Phone Number</td>
+                    <td>+91 9535115910</td>
+                </tr>
+                <tr>
+                    <td>Email ID</td>
+                    <td>rsumanth734@gmail.com</td>
+                </tr>
+            </table>
+
+            <h2>Hobbies & Interests</h2>
+            <div style="margin: 20px 0;">
+                <span class="tag">Reading</span>
+                <span class="tag">Coding</span>
+                <span class="tag">AI & Chatbot Development</span>
+                <span class="tag">Traveling</span>
+                <span class="tag">Sketching</span>
+            </div>
+
+            <button class="download-btn" onclick="downloadBioData()">📥 Download Bio Data</button>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="content-section">
+            <h1>Projects</h1>
+
+            <div class="project-card">
+                <h3>🚗 Carpooling Application</h3>
+                <p class="project-date">Mar 2025 – Apr 2025 | Computer Science DBMS Mini Project</p>
+                <p>Developed a web-based carpooling application using Flask and Oracle, within the Anaconda environment.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>📚 Library Management System</h3>
+                <p class="project-date">Nov 2024 – Dec 2024 | Academic Project</p>
+                <p>Created a Library Management System in C, handling book inventory, user records, issue/return functions, and due date tracking.</p>
+            </div>
+
+            <div class="project-card">
+                <h3>💻 Personal Programming Practice</h3>
+                <p class="project-date">Ongoing | Self-initiated</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Solved 100+ coding problems on platforms like LeetCode and HackerRank using C and Python.</li>
+                    <li>Built small projects to explore algorithms, data structures, and real-world logic implementations.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="content-section">
+            <h1>Get In Touch</h1>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <h2>Contact Information</h2>
+                <div style="font-size: 1.2em; line-height: 2; margin: 30px 0;">
+                    <p><strong>📧 Email:</strong> rsumanth734@gmail.com</p>
+                    <p><strong>📱 Phone:</strong> +91 9535115910</p>
+                    <p><strong>📍 Address:</strong> #126, 2nd Cross, Simhadri  Layout, Vidyaranypura, Bangalore - 97</p>
+                </div>
+                
+                <div style="margin-top: 40px;">
+                    <h3>Let's Connect!</h3>
+                    <p style="color: #666; margin: 20px 0;">
+                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Sumanth R. All rights reserved.</p>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Navigation functionality
+            $('.nav-btn').on('click', function() {
+                const section = $(this).data('section');
+                
+                $('.nav-btn').removeClass('active');
+                $(this).addClass('active');
+                
+                $('.content-section').removeClass('active');
+                $('#' + section).addClass('active');
+                
+                // Animate skill bars when resume or home section is shown
+                if (section === 'home' || section === 'resume') {
+                    animateSkillBars();
+                }
+            });
+
+            // Animate skill bars
+            function animateSkillBars() {
+                setTimeout(function() {
+                    $('.progress-fill').each(function() {
+                        const width = $(this).data('width');
+                        $(this).css('width', width + '%');
+                    });
+                }, 100);
+            }
+
+            // Initial animation
+            animateSkillBars();
+
+            // Smooth scroll effect
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this.getAttribute('href'));
+                if (target.length) {
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 100
+                    }, 1000);
+                }
+            });
+        });
+
+        // Download resume function
+        function downloadResume() {
+           
+            window.open('https://github.com/sumanthr27/Sumanth-Website/blob/main/CV.pdf', '_blank');
+        }
+
+        // Download bio data function
+        function downloadBioData() {
+            window.open('https://github.com/sumanthr27/Sumanth-Website/blob/main/bio%20data%20sumanth%20r.pdf', '_blank');
+        }
+    </script>
+</body>
+
+</html>
+
